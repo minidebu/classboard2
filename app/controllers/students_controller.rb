@@ -8,7 +8,7 @@ class StudentsController < ApplicationController
     if @student.save 
       redirect_to root_path
     else
-      render action: :new
+      render action: :index
     end
 
   end

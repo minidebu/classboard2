@@ -19,6 +19,8 @@
 
 <div class = "container">
 	<div class="wrapper">
+
+	<%= render 'error_messages', model: @student%>
 		<%=form_with model:@student,local: true do |f| %>       
 			<%= f.text_field :kana_name ,pattern:"[\u30A1-\u30F6]*" %><br>
 			<%= f.text_field :name %><br>
