@@ -1,14 +1,15 @@
+# require 'happybirthday'
 class StudentsController < ApplicationController
   def index
     @student = Student.new
-    
+    @students = Student.all
   end
   def create
     @student = Student.new(student_params)
     if @student.save 
       redirect_to root_path
     else
-      render action: :index
+      render action: :index 
     end
 
   end
@@ -16,6 +17,7 @@ class StudentsController < ApplicationController
   private
   def student_params
     params.require(:student).permit(:kana_name,:name,:birth_on)
-    
   end
+    
+
 end
