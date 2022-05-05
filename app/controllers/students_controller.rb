@@ -11,8 +11,10 @@ class StudentsController < ApplicationController
     else
       render action: :index 
     end
-
   end
+
+  
+
 
   private
   def student_params
