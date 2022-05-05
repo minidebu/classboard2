@@ -26,7 +26,7 @@ class Student < ApplicationRecord
       grade_g = "社会人"
   end
 
-    return "#{birth_on}は#{age}歳で#{grade_g}"
+    return grade_g
   end
 
   def get_age 
