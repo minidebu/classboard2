@@ -9,12 +9,20 @@ class StudentsController < ApplicationController
     if @student.save 
       redirect_to root_path
     else
+      @students = Student.all
       render action: :index 
     end
   end
 
-  
+  def show
+    @student = Student.find(params[:id])
+  end  
 
+  def update
+    student = Student.find(params[:id])
+    redirect_to root_path
+    
+  end
 
   private
   def student_params
