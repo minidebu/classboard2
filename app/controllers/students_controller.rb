@@ -19,8 +19,14 @@ class StudentsController < ApplicationController
   end  
 
   def update
-    student = Student.find(params[:id])
-    redirect_to root_path
+    @student = Student.find(params[:id])
+    @student.withdrawal_on =  withdrawal_params  
+    if @student.valid?(:withdrawal_set)
+      @student.save
+      redirect_to root_path
+    else 
+      render action: :show
+    end
     
   end
 
@@ -29,5 +35,13 @@ class StudentsController < ApplicationController
     params.require(:student).permit(:kana_name,:name,:birth_on)
   end
     
+  def withdrawal_params
+    date = params.require(:student).permit(:withdrawal_on)
 
+    if date["withdrawal_on(1i)"].empty? || date["withdrawal_on(2i)"].empty? || date["withdrawal_on(3i)"].empty?
+      return
+    end
+
+    Date.new(date["withdrawal_on(1i)"].to_i,date["withdrawal_on(2i)"].to_i,date["withdrawal_on(3i)"].to_i)
+  end
 end
