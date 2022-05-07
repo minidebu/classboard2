@@ -9,11 +9,16 @@ class LessonsController < ApplicationController
     end
   end
 
+  def destroy
+    lesson = Lesson.find(params[:id])
+    lesson.destroy
+    redirect_to root_path
+
+  end
+
 
   private
   def lesson_params
-    binding.pry
     params.require(:lesson).permit(:name)
-
   end
 end
