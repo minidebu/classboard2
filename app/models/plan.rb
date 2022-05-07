@@ -1,0 +1,4 @@
+class Plan < ApplicationRecord
+
+end
+

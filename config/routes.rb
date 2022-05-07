@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'students#index'
+  root to: 'plans#index'
   resources :students ,only:[:index,:new,:create,:update,:show]
+  resources :plans
+  resources :lessons ,only:[:create,:destroy]
+
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

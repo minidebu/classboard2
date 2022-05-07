@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_30_004659) do
+ActiveRecord::Schema.define(version: 2022_05_08_063151) do
+
+  create_table "lessons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "week_id", null: false
+    t.integer "num_week_id", null: false
+    t.time "st_time", null: false
+    t.date "started_on", null: false
+    t.date "updated_on"
+    t.bigint "student_id", null: false
+    t.bigint "lesson_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lesson_id"], name: "index_plans_on_lesson_id"
+    t.index ["student_id"], name: "index_plans_on_student_id"
+  end
 
   create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -33,4 +53,6 @@ ActiveRecord::Schema.define(version: 2022_04_30_004659) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "plans", "lessons"
+  add_foreign_key "plans", "students"
 end
