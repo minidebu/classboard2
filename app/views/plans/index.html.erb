@@ -4,12 +4,13 @@
 
 <div class = "container">
      <%= link_to students_path,method: :get do %>
-      <button class="btn btn-info">生徒</button >
+      <button class="btn btn-info">生徒一覧に戻る</button >
     <% end %>
 
 
 
   <div >
+   <h1>お稽古登録</h1>
 		<%=form_with model:@lesson ,local: true ,method: :post do |f| %>
     	<%= f.text_field :name %>
       <%= f.submit '登録する'%><br>
@@ -23,6 +24,7 @@
 
   </div>
   <div>
+    <h1>お稽古一覧</h1>
   	<table class="table table-hover table-bordered text-center  ">
 			<thead>
 				<tr >
@@ -44,5 +46,6 @@
 
 
   </div>
+
 
 </div>

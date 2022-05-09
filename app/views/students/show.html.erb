@@ -8,6 +8,12 @@
   <div class="mt-2"> 年齢 :<%= @student.get_age%> </div>
   <div class="mt-2 mb-5"> 学年 :<%= @student.school_grade%></div>
 
+	<%= render 'plans/new', student: @student %>
+
+
+
+
+
 		<%=form_with model:@student,local: true ,url: student_path(@student),method: :patch,class: 'mt-4' do |f| %>  
   
  			<%= raw sprintf(

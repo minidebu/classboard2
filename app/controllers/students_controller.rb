@@ -7,7 +7,7 @@ class StudentsController < ApplicationController
   def create
     @student = Student.new(student_params)
     if @student.save 
-      redirect_to root_path
+      redirect_to student_path(@student[:id])
     else
       @students = Student.all
       render action: :index 

@@ -3,4 +3,9 @@ class PlansController < ApplicationController
     @lesson = Lesson.new
     @lessons = Lesson.all
   end
+
+  def  new
+    @lesson = Lesson.new
+
+  end
 end
