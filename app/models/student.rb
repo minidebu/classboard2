@@ -1,5 +1,6 @@
 class Student < ApplicationRecord
   has_many :plans
+  accepts_nested_attributes_for :plans
   
   validates :kana_name ,presence: true
   validates :name ,presence: true
@@ -8,6 +9,8 @@ class Student < ApplicationRecord
   validates :withdrawal_on ,presence: true ,on: :withdrawal_set
 
 
+
+  
 
   def get_grade
     date_format = "%Y%m%d"

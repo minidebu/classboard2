@@ -1,4 +1,4 @@
-class Week < Activehash::Base
+class Week < ActiveHash::Base
   self.data = [
   { id: 1, name: '月曜日' },
   { id: 2, name: '火曜日' },
