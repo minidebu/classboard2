@@ -1,4 +1,4 @@
-<tr class="item text-center" >
+<tr class="nested-fields text-center" >
     <td>
       <%= f.collection_select(:num_week_id, NumWeek.all, :id, :name, {}, {class:"num-week-select"}) %>
     </td>
@@ -23,5 +23,8 @@
 					end_year: (Time.now.year - 1),
 					date_separator: '%s'),
 				"年", "月") + "日" %>
+    </td>
+    <td>
+      <%= link_to_remove_association '削除', f, class: 'btn btn-default' %>
     </td>
 </tr>
