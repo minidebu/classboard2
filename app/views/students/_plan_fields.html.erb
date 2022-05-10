@@ -6,9 +6,22 @@
     <%= f.collection_select(:week_id, Week.all, :id, :name, {}, {class:"week-select"}) %>
     </td>
     <td>
-      <%= f.time_select :st_time,{start_hour: 8, end_hour: 22, minute_step: 60} , ignore_data:true %> 
+      <%= f.time_select :st_time,{start_hour: 8, end_hour: 22, minute_step: 15} , ignore_data:true %> 
     </td>
     <td>
       <%= f.collection_select(:lesson_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %>
+    </td>
+    <td>
+      <%= raw sprintf(
+				f.date_select(
+					:started_on,
+					class:'select-withdrawal',
+					id:"withdrawal-date",
+					use_month_numbers: true,
+					prompt:'--',
+					start_year: (Time.now.year + 1 ),
+					end_year: (Time.now.year - 1),
+					date_separator: '%s'),
+				"年", "月") + "日" %>
     </td>
 </tr>

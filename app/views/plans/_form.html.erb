@@ -1,29 +1,25 @@
 
 <%= form_with(model: model, local: true) do |form| %> 
-
-  <%= form.fields_for :plans do |t| %>
-    <%= render "plan_fields", f: t %>
-  <% end %>
-
-  <%= link_to_add_association '追加', form, :plans,class: 'btn btn-success',data: {
-  association_insertion_node: '#detail-association-insertion-point',
-  association_insertion_method: 'after'}%>
   <table class="table table-bordered">
     <thead>
       <tr class="text-center">
-        <th>開始時間</th>
-        <th>曜日</th>
+        
         <th>週目</th>
+        <th>曜日</th>
+        <th>開始時間</th>
         <th>内容</th>
+        <th>開始日</th>
       </tr>
     </thead>
     <tbody class="bulk-registration-form ">
 
-      <%= form.fields_for :plan do |t| %>
-        <% 4.times do %>
-          <%= render "plan_fields", f: t %> 
-        <% end %>
+      <%= form.fields_for :plans do |t| %>
+        <%= render "plan_fields", f: t %>
       <% end %>
+
+      <%= link_to_add_association '追加', form, :plans,class: 'btn btn-success',data: {
+      association_insertion_node: '#detail-association-insertion-point',
+      association_insertion_method: 'after'}%>
       <tr id="detail-association-insertion-point"> </tr>
 
     </tbody>

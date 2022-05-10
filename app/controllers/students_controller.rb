@@ -20,8 +20,10 @@ class StudentsController < ApplicationController
 
   def update
     @student = Student.find(params[:id])
-    @student.withdrawal_on =  withdrawal_params  
-    if @student.valid?(:withdrawal_set)
+    binding.pry
+    # @student.withdrawal_on =  withdrawal_params  
+    # if @student.valid?(:withdrawal_set)
+    if @student.update(plan_params)
       @student.save
       redirect_to root_path
     else 
@@ -42,7 +44,10 @@ class StudentsController < ApplicationController
     if date["withdrawal_on(1i)"].empty? || date["withdrawal_on(2i)"].empty? || date["withdrawal_on(3i)"].empty?
       return
     end
-
     Date.new(date["withdrawal_on(1i)"].to_i,date["withdrawal_on(2i)"].to_i,date["withdrawal_on(3i)"].to_i)
+  end
+
+  def plan_params 
+    params.require(:student).permit(:name, plans_attributes: [:id, :week_id,:num_week_id,:st_time,:started_on,:update_on,:lesson_id,:_destroy])
   end
 end

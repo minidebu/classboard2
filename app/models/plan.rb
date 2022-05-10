@@ -1,8 +1,8 @@
 class Plan < ApplicationRecord
   belongs_to :lesson
-  belongs_to :stundet
+  belongs_to :student
 
-  ActiveHash::Associations::ActiveRecordExtensions
+  extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :week
   belongs_to :num_week
 end
