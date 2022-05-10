@@ -1,7 +1,0 @@
-<%= form_with(model: Plan, local: true) do |f| %> 
-  <%= f.time_select :st_time,{start_hour: 8, end_hour: 22, minute_step: 60} , ignore_data:true %>
-  <%= f.collection_select(:week_id, Week.all, :id, :name, {}, {class:"week-select"}) %>
-  <%= f.collection_select(:num_week_id, NumWeek.all, :id, :name, {}, {class:"num-week-select"}) %>
-  <%= f.collection_select(:lesson_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %>
-  <%= f.submit '登録する'%>
-<% end %>

@@ -6,6 +6,10 @@ class PlansController < ApplicationController
 
   def  new
     @lesson = Lesson.new
-
   end
+
+  def create
+    binding.pry
+  end
+
 end

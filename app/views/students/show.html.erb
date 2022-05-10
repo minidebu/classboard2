@@ -1,6 +1,6 @@
 詳細画面
 <div class = "container d-flex">
-  <div class=" col-4">
+  <div class=" col-6">
 
   <h1><%= @student.name%> </h1>
 
@@ -8,11 +8,7 @@
   <div class="mt-2"> 年齢 :<%= @student.get_age%> </div>
   <div class="mt-2 mb-5"> 学年 :<%= @student.school_grade%></div>
 
-	<%= render 'plans/new', student: @student %>
-
-
-
-
+	<%= render 'plans/form', model: @student %>
 
 		<%=form_with model:@student,local: true ,url: student_path(@student),method: :patch,class: 'mt-4' do |f| %>  
   
