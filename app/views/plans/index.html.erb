@@ -1,0 +1,50 @@
+<h1>Plans#index</h1>
+<p>Find me in app/views/plans/index.html.erb</p>
+
+
+<div class = "container">
+     <%= link_to students_path,method: :get do %>
+      <button class="btn btn-info">生徒一覧に戻る</button >
+    <% end %>
+
+
+
+  <div >
+   <h1>お稽古登録</h1>
+		<%=form_with model:@lesson ,local: true ,method: :post do |f| %>
+    	<%= f.text_field :name %>
+      <%= f.submit '登録する'%><br>
+    <% end %>
+    <br>
+
+
+
+
+
+  </div>
+  <div>
+    <h1>お稽古一覧</h1>
+  	<table class="table table-hover table-bordered text-center  ">
+			<thead>
+				<tr >
+					<th class="text-center col-1">No </th >
+					<th class="text-center col-3	">お稽古名</th>
+					<th class="text-center col-1">削除</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @lessons.each_with_index do |lesson , index|%>
+					<tr >
+						<td ><%= index+1 %></td>
+						<td ><%= lesson.name %></td>
+						<td><%= link_to '削除' , lesson_path(lesson) ,local: true ,method: :delete %></td> 
+					</tr>
+				<%end%>
+      </tbody>
+    </table>
+
+
+  </div>
+
+
+</div>

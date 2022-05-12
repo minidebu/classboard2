@@ -20,9 +20,9 @@
 ## plan table
 | Column                | Type        | Options                        |
 | --------------------- | ----------- | ------------------------------ |
-| week                  | string      | null: false                    |
+| week_id               | integer     | null: false                    |
 | num_week_id           | integer     | null: false                    |
-| time_id               | time        | null: false                    |
+| st_time               | time        | null: false                    |
 | started_on            | date        | null: false                    |
 | update_on             | date        |                                |
 | student               | references  | null: false ,foreign_key: true |

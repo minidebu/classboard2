@@ -7,7 +7,7 @@ class StudentsController < ApplicationController
   def create
     @student = Student.new(student_params)
     if @student.save 
-      redirect_to root_path
+      redirect_to student_path(@student[:id])
     else
       @students = Student.all
       render action: :index 
@@ -20,15 +20,16 @@ class StudentsController < ApplicationController
 
   def update
     @student = Student.find(params[:id])
-    @student.withdrawal_on =  withdrawal_params  
-    if @student.valid?(:withdrawal_set)
-      @student.save
+
+    if @student.update(plan_params)
       redirect_to root_path
     else 
       render action: :show
     end
     
   end
+
+
 
   private
   
@@ -42,7 +43,10 @@ class StudentsController < ApplicationController
     if date["withdrawal_on(1i)"].empty? || date["withdrawal_on(2i)"].empty? || date["withdrawal_on(3i)"].empty?
       return
     end
-
     Date.new(date["withdrawal_on(1i)"].to_i,date["withdrawal_on(2i)"].to_i,date["withdrawal_on(3i)"].to_i)
+  end
+
+  def plan_params 
+    params.require(:student).permit(:name, plans_attributes: [:id, :week_id,:num_week_id,:st_time,:started_on,:lesson_id,:_destroy])
   end
 end

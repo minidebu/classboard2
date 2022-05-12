@@ -17,3 +17,4 @@ require('student.js')
 // const imagePath = (name) => images(name, true)
 import 'bootstrap';
 import '../stylesheets/application';
+import "cocoon";
