@@ -1,0 +1,63 @@
+
+
+
+
+<div class = "container">
+  <table class="table table-hover table-bordered text-center ">
+    <thead>
+      <tr >
+      
+        <th class="text-center">１周目</th>
+        <th class="text-center">２周目</th>
+        <th class="text-center">3週目</th>
+        <th class="text-center">4週目</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <%=  %>
+      <% @monthly_schedules.each do |monthly_schedule| %>
+        <tr > 
+          <td > <%= monthly_schedule.one_week.name %> </td> 
+          <td > <%= monthly_schedule.two_week.name %> </td> 
+          <td > <%= monthly_schedule.three_week.name %> </td> 
+          <td > <%= monthly_schedule.four_week.name %> </td> 
+        </tr>
+        <%end%>
+      <br>  
+
+        
+    </tbody>
+  </table>
+</div >
+
+
+
+
+
+<div class = "container">
+  <table class="table table-hover table-bordered text-center ">
+    <thead>
+      <tr >
+      
+        <th class="text-center">１周目</th>
+        <th class="text-center">２周目</th>
+        <th class="text-center">3週目</th>
+        <th class="text-center">4週目</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <%=form_with model:@monthly_schedule ,local: true ,method: :post do |f| %>
+        <tr >
+          <td > <%= f.collection_select(:one_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td> 
+          <td > <%= f.collection_select(:two_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>
+          <td > <%= f.collection_select(:three_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>
+          <td > <%= f.collection_select(:four_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>        
+        </tr>
+      <br>  
+        <%= f.submit '登録する'%>
+        <%end%>
+    </tbody>
+  </table>
+</div >
