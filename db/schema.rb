@@ -10,12 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_08_063151) do
+ActiveRecord::Schema.define(version: 2022_05_12_021817) do
 
   create_table "lessons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "monthly_schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "one_week_id", null: false
+    t.bigint "two_week_id", null: false
+    t.bigint "three_week_id", null: false
+    t.bigint "four_week_id", null: false
+    t.index ["four_week_id"], name: "index_monthly_schedules_on_four_week_id"
+    t.index ["one_week_id"], name: "index_monthly_schedules_on_one_week_id"
+    t.index ["three_week_id"], name: "index_monthly_schedules_on_three_week_id"
+    t.index ["two_week_id"], name: "index_monthly_schedules_on_two_week_id"
   end
 
   create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -53,6 +64,10 @@ ActiveRecord::Schema.define(version: 2022_05_08_063151) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "monthly_schedules", "lessons", column: "four_week_id"
+  add_foreign_key "monthly_schedules", "lessons", column: "one_week_id"
+  add_foreign_key "monthly_schedules", "lessons", column: "three_week_id"
+  add_foreign_key "monthly_schedules", "lessons", column: "two_week_id"
   add_foreign_key "plans", "lessons"
   add_foreign_key "plans", "students"
 end
