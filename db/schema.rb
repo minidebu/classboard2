@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_12_021817) do
+ActiveRecord::Schema.define(version: 2022_05_13_070431) do
 
   create_table "lessons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 2022_05_12_021817) do
     t.index ["student_id"], name: "index_plans_on_student_id"
   end
 
+  create_table "student_monthlies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "monthly_schedule_id", null: false
+    t.date "started_on", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["monthly_schedule_id"], name: "index_student_monthlies_on_monthly_schedule_id"
+    t.index ["student_id"], name: "index_student_monthlies_on_student_id"
+  end
+
   create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "kana_name", null: false
@@ -70,4 +80,6 @@ ActiveRecord::Schema.define(version: 2022_05_12_021817) do
   add_foreign_key "monthly_schedules", "lessons", column: "two_week_id"
   add_foreign_key "plans", "lessons"
   add_foreign_key "plans", "students"
+  add_foreign_key "student_monthlies", "monthly_schedules"
+  add_foreign_key "student_monthlies", "students"
 end

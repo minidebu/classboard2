@@ -4,8 +4,6 @@ class MonthlySchedulesController < ApplicationController
     @monthly_schedules = MonthlySchedule.all
   end
 
-
-
   def create
     @monthly_schedule = MonthlySchedule.new(monthly_schedule_params)
     
@@ -17,7 +15,6 @@ class MonthlySchedulesController < ApplicationController
       render action: :index 
     end
   end
-
 
   private
   def monthly_schedule_params
