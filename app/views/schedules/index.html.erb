@@ -1,7 +1,3 @@
-
-
-
-
 <div class = "container">
   <table class="table table-hover table-bordered text-center ">
     <thead>
@@ -15,13 +11,13 @@
       </tr>
     </thead>
     <tbody>
-      <%=  %>
-      <% @monthly_schedules.each do |monthly_schedule| %>
+    
+      <% @schedules.each do |schedule| %>
         <tr > 
-          <td > <%= monthly_schedule.one_week.name %> </td> 
-          <td > <%= monthly_schedule.two_week.name %> </td> 
-          <td > <%= monthly_schedule.three_week.name %> </td> 
-          <td > <%= monthly_schedule.four_week.name %> </td> 
+          <td > <%= schedule.one_week.name %> </td> 
+          <td > <%= schedule.two_week.name %> </td> 
+          <td > <%= schedule.three_week.name %> </td> 
+          <td > <%= schedule.four_week.name %> </td> 
         </tr>
         <%end%>
       <br>  
@@ -31,10 +27,6 @@
   </table>
 </div >
 
-
-
-
-
 <div class = "container">
   <table class="table table-hover table-bordered text-center ">
     <thead>
@@ -48,7 +40,7 @@
       </tr>
     </thead>
     <tbody>
-      <%=form_with model:@monthly_schedule ,local: true ,method: :post do |f| %>
+      <%=form_with model:@schedule,local: true ,method: :post do |f| %>
         <tr >
           <td > <%= f.collection_select(:one_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td> 
           <td > <%= f.collection_select(:two_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>
@@ -60,4 +52,4 @@
         <%end%>
     </tbody>
   </table>
-</div >
+</div > 

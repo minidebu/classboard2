@@ -10,23 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_13_070431) do
+ActiveRecord::Schema.define(version: 2022_05_13_080607) do
 
   create_table "lessons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "monthly_schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "one_week_id", null: false
-    t.bigint "two_week_id", null: false
-    t.bigint "three_week_id", null: false
-    t.bigint "four_week_id", null: false
-    t.index ["four_week_id"], name: "index_monthly_schedules_on_four_week_id"
-    t.index ["one_week_id"], name: "index_monthly_schedules_on_one_week_id"
-    t.index ["three_week_id"], name: "index_monthly_schedules_on_three_week_id"
-    t.index ["two_week_id"], name: "index_monthly_schedules_on_two_week_id"
   end
 
   create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -43,14 +32,25 @@ ActiveRecord::Schema.define(version: 2022_05_13_070431) do
     t.index ["student_id"], name: "index_plans_on_student_id"
   end
 
-  create_table "student_monthlies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "one_week_id", null: false
+    t.bigint "two_week_id", null: false
+    t.bigint "three_week_id", null: false
+    t.bigint "four_week_id", null: false
+    t.index ["four_week_id"], name: "index_schedules_on_four_week_id"
+    t.index ["one_week_id"], name: "index_schedules_on_one_week_id"
+    t.index ["three_week_id"], name: "index_schedules_on_three_week_id"
+    t.index ["two_week_id"], name: "index_schedules_on_two_week_id"
+  end
+
+  create_table "student_schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "student_id", null: false
-    t.bigint "monthly_schedule_id", null: false
+    t.bigint "schedule_id", null: false
     t.date "started_on", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["monthly_schedule_id"], name: "index_student_monthlies_on_monthly_schedule_id"
-    t.index ["student_id"], name: "index_student_monthlies_on_student_id"
+    t.index ["schedule_id"], name: "index_student_schedules_on_schedule_id"
+    t.index ["student_id"], name: "index_student_schedules_on_student_id"
   end
 
   create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -74,12 +74,12 @@ ActiveRecord::Schema.define(version: 2022_05_13_070431) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "monthly_schedules", "lessons", column: "four_week_id"
-  add_foreign_key "monthly_schedules", "lessons", column: "one_week_id"
-  add_foreign_key "monthly_schedules", "lessons", column: "three_week_id"
-  add_foreign_key "monthly_schedules", "lessons", column: "two_week_id"
   add_foreign_key "plans", "lessons"
   add_foreign_key "plans", "students"
-  add_foreign_key "student_monthlies", "monthly_schedules"
-  add_foreign_key "student_monthlies", "students"
+  add_foreign_key "schedules", "lessons", column: "four_week_id"
+  add_foreign_key "schedules", "lessons", column: "one_week_id"
+  add_foreign_key "schedules", "lessons", column: "three_week_id"
+  add_foreign_key "schedules", "lessons", column: "two_week_id"
+  add_foreign_key "student_schedules", "schedules"
+  add_foreign_key "student_schedules", "students"
 end

@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe StudentMonthly, type: :model do
+RSpec.describe StudentSchedule, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end

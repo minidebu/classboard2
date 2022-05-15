@@ -1,0 +1,30 @@
+
+
+
+<div class = "container">
+  <table class="table table-hover table-bordered text-center ">
+    <thead>
+      <tr >
+      
+        <th class="text-center">１周目</th>
+        <th class="text-center">２周目</th>
+        <th class="text-center">3週目</th>
+        <th class="text-center">4週目</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <% student.schedules.each do |schedule| %>
+        <tr > 
+          <td > <%= schedule.one_week.name %> </td> 
+          <td > <%= schedule.two_week.name %> </td> 
+          <td > <%= schedule.three_week.name %> </td> 
+          <td > <%= schedule.four_week.name %> </td> 
+        </tr>
+        <%end%>
+      <br>  
+
+        
+    </tbody>
+  </table>
+</div >
