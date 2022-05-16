@@ -8,7 +8,7 @@
   <div class="mt-2"> 年齢 :<%= @student.get_age%> </div>
   <div class="mt-2 mb-5"> 学年 :<%= @student.school_grade%></div>
 
-	<%= link_to schedules_path method: :get do %>
+	<%= link_to student_student_schedules_path(@student) ,method: :get do %>
       <button class="btn btn-info">週の計画</button >
     <% end %>
 
