@@ -2,6 +2,9 @@ class Student < ApplicationRecord
   has_many :plans
   accepts_nested_attributes_for :plans ,allow_destroy: true
   
+  has_many :student_schedules
+  has_many :schedules, through: :student_schedules
+
   validates :kana_name ,presence: true
   validates :name ,presence: true
   validates :birth_on ,presence: true

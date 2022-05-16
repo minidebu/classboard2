@@ -8,7 +8,11 @@
   <div class="mt-2"> 年齢 :<%= @student.get_age%> </div>
   <div class="mt-2 mb-5"> 学年 :<%= @student.school_grade%></div>
 
-	<%= render 'plans/form', model: @student %>
+	<%= link_to student_student_schedules_path(@student) ,method: :get do %>
+      <button class="btn btn-info">週の計画</button >
+    <% end %>
+
+<%= render partial: "schedules/index", locals: { student: @student}%>
 
 		<%=form_with model:@student,local: true ,url: student_path(@student),method: :patch,class: 'mt-4' do |f| %>  
   
