@@ -1,0 +1,86 @@
+<div class = "container">
+  <h1><%= @stt.name %></h1>
+
+  <%= form_with model:[@student,@stt], local: true do |f| %>
+    曜日:
+    <%= f.collection_select(:week_id, Week.all, :id, :name, {}, {class:"week-select"}) %>
+    時間:
+    <%= f.time_select :st_time,{start_hour: 8, end_hour: 22, minute_step: 15} , ignore_data:true %>
+    <br>
+    開始日:
+    <%= raw sprintf(
+      f.date_select(
+        :started_on,
+        class:'select-birth',
+        id:"started_on",
+        use_month_numbers: true,
+
+        start_year: (Time.now.year - 1),
+        end_year: (Time.now.year + 1),
+        default: Time.now,
+        date_separator: '%s'),
+        "年", "月") + "日" %>
+    <table class="table table-hover table-bordered text-center ">
+      <thead>
+        <tr >
+          <th class="text-center">選択</th>
+          <th class="text-center">1周目</th>
+          <th class="text-center">2周目</th>
+          <th class="text-center">3週目</th>
+          <th class="text-center">4週目</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% Schedule.all.each do |schedule| %>
+          <tr > 
+            <td > <%= f.radio_button :schedule_id, schedule.id ,:checked => (true if schedule.id == @stt.schedule_id ) %> </td> 
+            <td > <%= schedule.one_week.name %> </td> 
+            <td > <%= schedule.two_week.name %> </td> 
+            <td > <%= schedule.three_week.name %> </td> 
+            <td > <%= schedule.four_week.name %> </td> 
+          </tr>
+          <%end%>      
+      </tbody>
+
+    </table>  
+    <%= f.submit '変更  '%>
+  <% end %>    
+</div >
+
+<% @student.time_tables.each do |tab| %>
+  <%= tab.week.name%>
+  <%= tab.st_time%>
+ <%end%>
+
+ <div class = "container mt-5">
+
+
+
+<h1>スケジュール新規<h2>
+<div class = "container">
+  <table class="table table-hover table-bordered text-center ">
+    <thead>
+      <tr >
+      
+        <th class="text-center">１周目</th>
+        <th class="text-center">２周目</th>
+        <th class="text-center">3週目</th>
+        <th class="text-center">4週目</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <%=form_with model:Schedule,local: true ,method: :post do |f| %>
+        <tr >
+          <td > <%= f.collection_select(:one_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td> 
+          <td > <%= f.collection_select(:two_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>
+          <td > <%= f.collection_select(:three_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>
+          <td > <%= f.collection_select(:four_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>        
+        </tr>
+      <br>  
+        <%= f.submit '登録する'%>
+        <%end%>
+    </tbody>
+  </table>
+</div > 

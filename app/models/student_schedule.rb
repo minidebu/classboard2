@@ -1,5 +1,4 @@
 class StudentSchedule < ApplicationRecord
-  belongs_to :stundet
+  belongs_to :student
   belongs_to :schedule
-
 end
