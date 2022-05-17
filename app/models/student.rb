@@ -4,6 +4,8 @@ class Student < ApplicationRecord
   
   has_many :student_schedules
   has_many :schedules, through: :student_schedules
+  has_many :student_time_tables
+  has_many :time_tables, through: :student_time_tables
 
   validates :kana_name ,presence: true
   validates :name ,presence: true

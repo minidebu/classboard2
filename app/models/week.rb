@@ -9,6 +9,6 @@ class Week < ActiveHash::Base
   { id: 7, name: '日曜日' },
   ]
   include ActiveHash::Associations
-  has_many :plans
+  has_many :plans,:time_tables
 
 end

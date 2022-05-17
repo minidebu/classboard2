@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_13_080607) do
+ActiveRecord::Schema.define(version: 2022_05_16_020016) do
 
   create_table "lessons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -53,11 +53,28 @@ ActiveRecord::Schema.define(version: 2022_05_13_080607) do
     t.index ["student_id"], name: "index_student_schedules_on_student_id"
   end
 
+  create_table "student_time_tables", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "time_table_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["student_id"], name: "index_student_time_tables_on_student_id"
+    t.index ["time_table_id"], name: "index_student_time_tables_on_time_table_id"
+  end
+
   create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "kana_name", null: false
     t.date "birth_on", null: false
     t.date "withdrawal_on"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "time_tables", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "week_id", null: false
+    t.time "st_time", null: false
+    t.date "started_on", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -82,4 +99,6 @@ ActiveRecord::Schema.define(version: 2022_05_13_080607) do
   add_foreign_key "schedules", "lessons", column: "two_week_id"
   add_foreign_key "student_schedules", "schedules"
   add_foreign_key "student_schedules", "students"
+  add_foreign_key "student_time_tables", "students"
+  add_foreign_key "student_time_tables", "time_tables"
 end
