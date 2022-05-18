@@ -5,21 +5,46 @@
   <table class="table table-hover table-bordered text-center ">
     <thead>
       <tr >
-      
-        <th class="text-center">１周目</th>
-        <th class="text-center">２周目</th>
+        <th class="text-center">開始日</th>
+        <th class="text-center">曜日</th>
+        <th class="text-center">時間</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <% student.student_time_tables.order('started_on DESC').each do |stt| %>
+        <tr > 
+          <td > <%= stt.started_on.strftime('%Y年%m月%d日') %> </td>
+          <td > <%= stt.time_table.week.name %> </td> 
+          <td > <%= stt.time_table.st_time.strftime('%-H時%M分') %> </td> 
+        </tr>
+        <%end%>
+      <br>  
+
+        
+    </tbody>
+  </table>
+
+
+  <table class="table table-hover table-bordered text-center ">
+    <thead>
+      <tr >
+        <th class="text-center">開始日</th>
+        <th class="text-center">1周目</th>
+        <th class="text-center">2周目</th>
         <th class="text-center">3週目</th>
         <th class="text-center">4週目</th>
 
       </tr>
     </thead>
     <tbody>
-      <% student.schedules.each do |schedule| %>
+      <% student.student_schedules.order('started_on DESC').each do |st| %>
         <tr > 
-          <td > <%= schedule.one_week.name %> </td> 
-          <td > <%= schedule.two_week.name %> </td> 
-          <td > <%= schedule.three_week.name %> </td> 
-          <td > <%= schedule.four_week.name %> </td> 
+          <td > <%= st.started_on.strftime('%Y年%m月%d日') %> </td>
+          <td > <%= st.schedule.one_week.name %> </td> 
+          <td > <%= st.schedule.two_week.name %> </td> 
+          <td > <%= st.schedule.three_week.name %> </td> 
+          <td > <%= st.schedule.four_week.name %> </td> 
         </tr>
         <%end%>
       <br>  

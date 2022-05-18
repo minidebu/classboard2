@@ -8,7 +8,6 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.new(schedule_params)
 
     if @schedule .save 
-
       redirect_to schedules_path
     else
       @schedules = Schedule.all

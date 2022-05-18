@@ -1,5 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Lesson, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @lesson = FactoryBot.build(:lesson)
+  end
+
+  describe "科目の登録" do
+
+  end
 end

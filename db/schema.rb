@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2022_05_16_020016) do
   create_table "student_time_tables", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "student_id", null: false
     t.bigint "time_table_id", null: false
+    t.date "started_on", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["student_id"], name: "index_student_time_tables_on_student_id"
@@ -74,7 +75,6 @@ ActiveRecord::Schema.define(version: 2022_05_16_020016) do
   create_table "time_tables", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "week_id", null: false
     t.time "st_time", null: false
-    t.date "started_on", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
