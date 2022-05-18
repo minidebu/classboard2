@@ -3,8 +3,14 @@ class ScheduleTimeTable
 include ActiveModel::Model
 include ActiveRecord::AttributeAssignment 
 attr_accessor :student_id,:schedule_id,:started_on,:time_table_id,:week_id,:st_time,:name
-# validate :not_afetr_start
+with_options presence: true do
+  validates :student_id
+  validates :started_on
+  validates :week_id
+  validates :st_time
+end
 
+validate :not_afetr_start
 
 
   def self.set(student)
@@ -33,11 +39,33 @@ attr_accessor :student_id,:schedule_id,:started_on,:time_table_id,:week_id,:st_t
   private
   def not_afetr_start
     student = Student.find(student_id)
-    before_schedule_on = student.student_schedules.last.started_on
-    before_time_table_on = student.student_time_tables.last.started_on
-    binding.pry
-    errors.add(:started_on, 'Please set afetr day ') if started_on < before_schedule_on || started_on < before_time_table_on 
+    before_on = student.student_schedules.last.started_on
+    if  before_on > student.student_time_tables.last.started_on
+      before_on = student.student_time_tables.last.started_on
+    end
+    after_on = Date.new(started_on[1],started_on[2] , started_on[3])  
+     if after_on <= before_on
+      errors.add(:started_on, 'Please set afetr day ')
+     else
+      false
+     end
   end
+
+
+
+  # def not_chenge_time_table
+  #   student = Student.find(student_id)
+
+  #   if student.student_time_tables.present? & student.student_schedules.present? 
+  #     time_table = student.student_time_tables.last.time_table
+  #     schedule = student.student_schedules.last
+
+  #     errors.add(:time_table_id, 'Please change week or time ') if  (st_time[4] ==  time_table.st_time.hour && st_time[5]== time_table.st_time.min && week_id.to_i == time_table.week_id)
+  #     errors.add(:schedule_id, 'Please change course ') if  (schedule_id.to_i == schedule.schedule_id )
+  #     end
+
+  # end
+
 
 
   def schedule_save?

@@ -4,9 +4,6 @@ class ScheduleTimeTablesController < ApplicationController
     @stt = ScheduleTimeTable.set(@student)
 
   end
-
-
-
   def create
     @stt = ScheduleTimeTable.new(stt_params)
     if @stt.valid? & @stt.save
