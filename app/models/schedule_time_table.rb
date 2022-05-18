@@ -11,9 +11,11 @@ attr_accessor :student_id,:schedule_id,:started_on,:time_table_id,:week_id,:st_t
     if student.schedules.blank? && student.time_tables.blank?
       ScheduleTimeTable.new(name:student.name,schedule_id:Schedule.first.id)
     elsif  student.schedules.present? && student.time_tables.present?  
-      schedule = student.schedules.last
-      time_table = student.time_tables.last
-      ScheduleTimeTable.new(student_id: student.id,schedule_id:schedule.id,time_table_id:time_table.id,week_id:time_table.week_id,st_time:time_table.st_time,name:student.name)
+      schedule = student.student_schedules.last
+      time_table = student.student_time_tables.last.time_table
+    
+
+      ScheduleTimeTable.new(student_id: student.id,schedule_id:schedule.schedule_id,time_table_id:time_table.id,week_id:time_table.week_id,st_time:time_table.st_time,name:student.name)
     end
 
   end

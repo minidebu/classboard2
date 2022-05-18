@@ -5,6 +5,8 @@
   	<%= link_to  student_path(@student) ,method: :get do %>
       <button class="btn btn-info">戻る</button >
     <% end %>
+
+
   <%= form_with model:[@student,@stt], local: true do |f| %>
     曜日:
     <%= f.collection_select(:week_id, Week.all, :id, :name, {}, {class:"week-select"}) %>
@@ -18,7 +20,6 @@
         class:'select-birth',
         id:"started_on",
         use_month_numbers: true,
-
         start_year: (Time.now.year - 1),
         end_year: (Time.now.year + 1),
         default: Time.now,

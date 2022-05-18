@@ -2,17 +2,19 @@ class ScheduleTimeTablesController < ApplicationController
   def index
     @student = Student.find(params[:student_id])
     @stt = ScheduleTimeTable.set(@student)
+
   end
 
 
 
   def create
-    stt = ScheduleTimeTable.new(stt_params)
-    if stt.valid? & stt.save
+    @stt = ScheduleTimeTable.new(stt_params)
+    if @stt.valid? & @stt.save
         redirect_to root_path
     else
       @student = Student.find(params[:student_id])
-      @stt = ScheduleTimeTable.set(@student)  
+      @stt.started_on = Date.new(@stt.started_on[1],@stt.started_on[2] ,@stt.started_on[3])
+      @stt.schedule_id = @stt.schedule_id.to_i
       render :index
     end
 
