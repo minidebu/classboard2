@@ -8,7 +8,7 @@ class ScheduleTimeTablesController < ApplicationController
 
   def create
     stt = ScheduleTimeTable.new(stt_params)
-    if stt.valid? && stt.save
+    if stt.valid? & stt.save
         redirect_to root_path
     else
       @student = Student.find(params[:student_id])

@@ -12,7 +12,7 @@
     </thead>
     <tbody>
     
-      <% student.student_time_tables.each do |stt| %>
+      <% student.student_time_tables.order('started_on DESC').each do |stt| %>
         <tr > 
           <td > <%= stt.started_on.strftime('%Y年%m月%d日') %> </td>
           <td > <%= stt.time_table.week.name %> </td> 
@@ -38,13 +38,13 @@
       </tr>
     </thead>
     <tbody>
-      <% student.schedules.each do |schedule| %>
+      <% student.student_schedules.order('started_on DESC').each do |st| %>
         <tr > 
-          <td > <%= schedule.student_schedules[0].started_on.strftime('%Y年%m月%d日') %> </td>
-          <td > <%= schedule.one_week.name %> </td> 
-          <td > <%= schedule.two_week.name %> </td> 
-          <td > <%= schedule.three_week.name %> </td> 
-          <td > <%= schedule.four_week.name %> </td> 
+          <td > <%= st.started_on.strftime('%Y年%m月%d日') %> </td>
+          <td > <%= st.schedule.one_week.name %> </td> 
+          <td > <%= st.schedule.two_week.name %> </td> 
+          <td > <%= st.schedule.three_week.name %> </td> 
+          <td > <%= st.schedule.four_week.name %> </td> 
         </tr>
         <%end%>
       <br>  

@@ -9,7 +9,7 @@ attr_accessor :student_id,:schedule_id,:started_on,:time_table_id,:week_id,:st_t
 
   def self.set(student)
     if student.schedules.blank? && student.time_tables.blank?
-      ScheduleTimeTable.new(name:student.name)
+      ScheduleTimeTable.new(name:student.name,schedule_id:Schedule.first.id)
     elsif  student.schedules.present? && student.time_tables.present?  
       schedule = student.schedules.last
       time_table = student.time_tables.last
@@ -19,12 +19,13 @@ attr_accessor :student_id,:schedule_id,:started_on,:time_table_id,:week_id,:st_t
   end
 
   def save
-    if schedule_save? && time_table_save?
+    if (schedule_save? & time_table_save?)
+
       return false
+    else
+      return true
     end
   end
-
-
 
 
   private
@@ -39,19 +40,17 @@ attr_accessor :student_id,:schedule_id,:started_on,:time_table_id,:week_id,:st_t
 
   def schedule_save?
     student = Student.find(student_id)
-    schedule = student.student_schedules.last
-    upstart_on = Date.new(started_on[1],started_on[2] , started_on[3])
- 
-    if student.schedules.blank? || ( schedule_id.to_i != schedule.id  && schedule.started_on <= upstart_on)
-      StudentSchedule.create(student_id: student_id, schedule_id: schedule_id,started_on:started_on)
-    else 
-      return true
+
+    if student.student_schedules.present? 
+      schedule = student.student_schedules.last
+      upstart_on = Date.new(started_on[1],started_on[2] , started_on[3])  
+      if (schedule_id.to_i == schedule.schedule_id  || schedule.started_on >= upstart_on)
+        return true
+      end
     end
+    StudentSchedule.create(student_id: student_id, schedule_id: schedule_id,started_on:started_on)
+    return false
   end
-
-
-
-
 
 
   def time_table_save?  
@@ -78,7 +77,8 @@ attr_accessor :student_id,:schedule_id,:started_on,:time_table_id,:week_id,:st_t
       StudentTimeTable.create(student_id: student_id, time_table_id: time_present.id,started_on:started_on)
     else
       new_time_table = TimeTable.create(week_id:week_id,st_time:st_time)
-      StudentTimeTable.create(student_id: student_id, time_table_id: new_time_table.id,started_on:started_on)
+      StudentTimeTable.create(student_id: student_id, time_table_id: new_time_table.id,started_on:started_on)      
     end
+    return false
   end
 end

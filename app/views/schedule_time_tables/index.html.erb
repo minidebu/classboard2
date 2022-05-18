@@ -1,5 +1,5 @@
 <div class = "container">
-  <h1><%= @stt.name %></h1>
+  <h1><%= @student.name %></h1>
 
 
   	<%= link_to  student_path(@student) ,method: :get do %>
@@ -18,7 +18,7 @@
         class:'select-birth',
         id:"started_on",
         use_month_numbers: true,
-  
+
         start_year: (Time.now.year - 1),
         end_year: (Time.now.year + 1),
         default: Time.now,
@@ -38,7 +38,7 @@
       <tbody>
         <% Schedule.all.each do |schedule| %>
           <tr > 
-            <td > <%= f.radio_button :schedule_id, schedule.id ,:checked => (true if schedule.id == @stt.schedule_id ) %> </td> 
+            <td > <%= f.radio_button :schedule_id, schedule.id ,:checked => (true if schedule.id == @stt.schedule_id  ) %> </td> 
             <td > <%= schedule.one_week.name %> </td> 
             <td > <%= schedule.two_week.name %> </td> 
             <td > <%= schedule.three_week.name %> </td> 
