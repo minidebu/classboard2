@@ -21,15 +21,14 @@ class StudentsController < ApplicationController
   def update
     @student = Student.find(params[:id])
 
-    if @student.update(plan_params)
+      binding.pry
+    if @student.update(withdrawal_on:withdrawal_params)
       redirect_to root_path
     else 
       render action: :show
     end
     
   end
-
-
 
   private
   

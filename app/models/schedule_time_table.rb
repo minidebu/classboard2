@@ -15,6 +15,7 @@ validate :not_afetr_start
 
   def self.set(student)
     if student.schedules.blank? && student.time_tables.blank?
+      binding.pry
       ScheduleTimeTable.new(name:student.name,schedule_id:Schedule.first.id)
     elsif  student.schedules.present? && student.time_tables.present?  
       schedule = student.student_schedules.last
@@ -28,7 +29,7 @@ validate :not_afetr_start
 
   def save
     if (schedule_save? & time_table_save?)
-
+      binding.pry
       return false
     else
       return true
@@ -39,6 +40,11 @@ validate :not_afetr_start
   private
   def not_afetr_start
     student = Student.find(student_id)
+    # 新規登録なら以下の処理をせずOK
+    if student.student_schedules.blank?
+      return true
+    end
+    # 変更がある場合
     before_on = student.student_schedules.last.started_on
     if  before_on > student.student_time_tables.last.started_on
       before_on = student.student_time_tables.last.started_on
