@@ -15,7 +15,6 @@ validate :not_afetr_start
 
   def self.set(student)
     if student.schedules.blank? && student.time_tables.blank?
-      binding.pry
       ScheduleTimeTable.new(name:student.name,schedule_id:Schedule.first.id)
     elsif  student.schedules.present? && student.time_tables.present?  
       schedule = student.student_schedules.last
@@ -29,7 +28,6 @@ validate :not_afetr_start
 
   def save
     if (schedule_save? & time_table_save?)
-      binding.pry
       return false
     else
       return true

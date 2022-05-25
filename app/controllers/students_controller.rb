@@ -20,8 +20,6 @@ class StudentsController < ApplicationController
 
   def update
     @student = Student.find(params[:id])
-
-      binding.pry
     if @student.update(withdrawal_on:withdrawal_params)
       redirect_to root_path
     else 
