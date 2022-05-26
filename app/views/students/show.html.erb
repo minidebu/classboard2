@@ -22,10 +22,12 @@
 					class:'select-withdrawal',
 					id:"withdrawal-date",
 					use_month_numbers: true,	
+					discard_day: true,
+					default: Date.today.end_of_month,
 					start_year: (Time.now.year + 1 ),
 					end_year: (Time.now.year - 1),
 					date_separator: '%s'),
-				"年", "月") + "日" %>
+				"年") + "月末" %>
         <%= f.submit '退会する'%>
     <% end %>
 

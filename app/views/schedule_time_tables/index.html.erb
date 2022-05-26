@@ -8,6 +8,7 @@
       <button class="btn btn-info">戻る</button >
     <% end %>
 
+  
 
   <%= form_with model:[@student,@stt], local: true do |f| %>
     曜日:
@@ -21,12 +22,13 @@
         :started_on,
         class:'select-birth',
         id:"started_on",
+        discard_day: true,
         use_month_numbers: true,
         start_year: (Time.now.year - 1),
         end_year: (Time.now.year + 1),
-        default: Time.now,
+        default: Date.today.beginning_of_month,
         date_separator: '%s'),
-        "年", "月") + "日" %>
+        "年") + "月" %>
     <table class="table table-hover table-bordered text-center ">
       <thead>
         <tr >

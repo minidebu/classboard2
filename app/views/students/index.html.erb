@@ -37,11 +37,11 @@
 					class:'select-birth',
 					id:"birth-date",
 					use_month_numbers: true,
-					prompt:'--',
+        	default: Date.today.beginning_of_month,
 					start_year: (Time.now.year - 5),
 					end_year: (Time.now.year - 120),
 					date_separator: '%s'),
-				"年", "月") + "日" %>
+				"年","月") + "日" %>
 				<%= f.submit '登録して次へ'%>
     </div>
 		<% end %>			
