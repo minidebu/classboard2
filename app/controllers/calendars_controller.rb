@@ -32,7 +32,6 @@ class CalendarsController < ApplicationController
     Object.const_set('Plan', Class.new(ApplicationRecord))
     
     make_plans(s_date)
-    
     # お稽古曜日と時間を登録
     plans_index = @plans.uniq(&:time_table_id)
     plans_index.each do |plan_index|
@@ -45,12 +44,35 @@ class CalendarsController < ApplicationController
       @plans.each do |plan|
         if ca_table.st_time == plan.time_table.st_time && ca_table.week_id == plan.time_table.week_id
           ca_table.count += 1 
-
         end
       end
       ca_table.name = ca_table.st_time.strftime("%H:%M") + " " + ca_table.count.to_s + "人"
+      # 4分作成
+      4.times do |i|
+        new_table = ca_table.dup
+        new_table.start_time = date_from_week(i+1, ca_table.week_id,s_date,ca_table.st_time)
+        new_table.save
+      end
     end 
+    @ca_tables = Plan.all
+
+
   end   
+
+  # 当月のテーブル変更修正
+  def change_ca_tables
+    # 当月退会
+
+
+    # 当月の曜日時間変更
+
+
+    # 
+
+  end
+
+
+
 
 # 何周目の何曜日から日付を返す
   def date_from_week(num_week, wday,s_date,st_time)
@@ -74,17 +96,16 @@ class CalendarsController < ApplicationController
     students = Student.where(withdrawal_on:nil).or(Student.where('withdrawal_on >= ?',s_date.beginning_of_month))
     @plans = []
     students.each do |student|
-      # 退会していない人のタイムテーブルを取得
+      # 退会していない人のタイムテーブルをすべて取得
       stts= student.student_time_tables.where('started_on <= ? ',s_date.end_of_month)
+
       # 今月遍歴があれば今月の遍歴すべて取得
-      if stts.where('started_on >= ? ',s_date.beginning_of_month).present?
-        stts.where('started_on >= ? ',s_date.beginning_of_month).each do |stt| 
-          @plans << stt
-        end
-      end
-      # 前月までの最後の遍歴を取得
-      if stts.where('started_on < ? ',s_date.beginning_of_month).present?
-        @plans << stts.where('started_on < ? ',s_date.beginning_of_month).last
+      if stts.find_by(started_on:s_date.beginning_of_month).present?
+
+          @plans << stts.find_by(started_on:s_date.beginning_of_month)
+      # 今月遍歴がなければ前月までの最後の遍歴を取得  
+      elsif stts.present?
+          @plans << stts.where('started_on < ? ',s_date.beginning_of_month).last
       end
     end
   end

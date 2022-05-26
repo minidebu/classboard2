@@ -1,4 +1,4 @@
-# require 'happybirthday'
+
 class StudentsController < ApplicationController
   def index
     @student = Student.new
