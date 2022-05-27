@@ -1,0 +1,39 @@
+
+<div class = "container">
+  <%= render 'shared/header'%>
+
+  <%= link_to root_path,method: :get do %>
+    <button class="btn btn-info">TOP</button >
+  <% end %>
+
+
+
+	<div class="wrapper">
+
+	<%= render 'error_messages', model: @student%>
+		<%=form_with model:@student,local: true do |f| %>
+			<label> カナ </label>		
+			<%= f.text_field :kana_name ,pattern:"[\u30A1-\u30F6]*" %><br>
+			<label> 名前 </label>
+			<%= f.text_field :name %><br>
+
+
+			<%= raw sprintf(
+				f.date_select(
+					:birth_on,
+					class:'select-birth',
+					id:"birth-date",
+					use_month_numbers: true,
+        	default: Date.today.beginning_of_month,
+					start_year: (Time.now.year - 5),
+					end_year: (Time.now.year - 120),
+					date_separator: '%s'),
+				"年","月") + "日" %>
+				<%= f.submit '登録して次へ'%>
+    </div>
+		<% end %>			
+	</div>
+</div>
+ 
+
+<%= render "devise/shared/links" %>

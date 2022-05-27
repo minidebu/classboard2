@@ -1,87 +1,37 @@
-<h1>Students#index</h1>
-<p>Find me in app/views/students/index.html.erb</p>
-
-
-<body>
-
-<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-secondary">Left</button>
-  <button type="button" class="btn btn-secondary">Middle</button>
-  <button type="button" class="btn btn-secondary">Right</button>
-</div>
-
-
-<!------ 生徒の登録フォーム---------->
-
 <div class = "container">
-	<div class = "container">
-     <%= link_to root_path,method: :get do %>
-      <button class="btn btn-info">TOP</button >
-    <% end %>
-</div>
-
-
-	<div class="wrapper">
-
-	<%= render 'error_messages', model: @student%>
-		<%=form_with model:@student,local: true do |f| %>
-			<label> カナ </label>		
-			<%= f.text_field :kana_name ,pattern:"[\u30A1-\u30F6]*" %><br>
-			<label> 名前 </label>
-			<%= f.text_field :name %><br>
-
-
-			<%= raw sprintf(
-				f.date_select(
-					:birth_on,
-					class:'select-birth',
-					id:"birth-date",
-					use_month_numbers: true,
-        	default: Date.today.beginning_of_month,
-					start_year: (Time.now.year - 5),
-					end_year: (Time.now.year - 120),
-					date_separator: '%s'),
-				"年","月") + "日" %>
-				<%= f.submit '登録して次へ'%>
-    </div>
-		<% end %>			
+	<%= render 'shared/header'%>
+	<h3 class="m-3" >生徒一覧</h3>
+	<div class="btn-group" role="group" aria-label="Basic example">
+		<button type="button" class="btn btn-secondary border mb-1"> 子供 </button>
+		<button type="button" class="btn btn-secondary border mb-1"> 全体 </button>
+		<button type="button" class="btn btn-secondary border mb-1"> 大人  </button>
 	</div>
-</div>
- 
- <%= link_to 'ログアウト' ,destroy_user_session_path , method: :delete%>
- <!------ 生徒の一覧フォーム---------->
 
-
-	<div class = "container">
-		<h1>一覧表示</h1>
-		<table class="table table-hover table-bordered text-center ">
-			<thead>
+	<table class="table table-hover table-bordered text-center ">
+		<thead>
+			<tr >
+				<th class="text-center col-1">No </th >
+				<th class="text-center col-3	">名前</th>
+				<th class="text-center col-3	">読み方</th>
+				<th class="text-center col-2">年齢</th>
+				<th class="text-center col-2">学年</th>
+				<th class="text-center col-1">詳細</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @students.where(withdrawal_on: nil).order('birth_on DESC').each_with_index do |student , index|%>
 				<tr >
-					<th class="text-center col-1">No </th >
-					<th class="text-center col-3	">名前</th>
-					<th class="text-center col-3	">読み方</th>
-					<th class="text-center col-2">年齢</th>
-					<th class="text-center col-2">学年</th>
-					<th class="text-center col-1">詳細</th>
+					<td ><%= index+1 %></td>
+					<td ><%= student.name %></td>
+					<td ><%= student.kana_name %></td>
+					<td><%= student.get_age%>歳</td>
+					<td><%= student.school_grade%></td>
+					<td><%= link_to '詳細' , student_path(student) ,local: true %></td> 
 				</tr>
-			</thead>
-			<tbody>
-				<% @students.where(withdrawal_on: nil).order('birth_on DESC').each_with_index do |student , index|%>
-					<tr >
-						<td ><%= index+1 %></td>
-						<td ><%= student.name %></td>
-						<td ><%= student.kana_name %></td>
-						<td><%= student.get_age%>歳</td>
-						<td><%= student.school_grade%></td>
-						<td><%= link_to '詳細' , student_path(student) ,local: true %></td> 
-					</tr>
-				<%end%>
-			</tbody>
-		</table>
-	</div>
+			<%end%>
+		</tbody>
+	</table>
+</div>
 
 
-    <p id="test">jQueryでーーーーーす</p>
-    <p class="hoge">色を変えまーーーーーーーす</p>
 
-</body>

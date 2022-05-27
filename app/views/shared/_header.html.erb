@@ -2,14 +2,31 @@
   <nav class="navbar navbar-expand navbar-light bg-light">
     <%= link_to '〇〇教室', root_path , class:"navbar-brand"%>
     <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            生徒
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><%= link_to '入会登録', "#" , class:"dropdown-item"%></li>
+            <li><%= link_to '一覧・変更', students_path , class:"dropdown-item"%></li>
+          </ul>
+        </li>
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            設定
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><%= link_to 'お稽古の登録・変更', "#" , class:"dropdown-item"%></li>
+            <li><%= link_to '受講パターンの登録', students_path , class:"dropdown-item"%></li>
+          </ul>
+        </li>
+
         <li class="nav-item">
-          <%= link_to '生徒', students_path , class:"nav-link active"%>
+          <a class="nav-link active" aria-current="page" href="#">欠席・振替</a>
         </li>
         <li class="nav-item">
-          <%= link_to '設定', '#' , class:"nav-link active"%>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">振替</a>
-        </li>
+          <%= link_to 'ログアウト' ,destroy_user_session_path , method: :delete%>
+         </li>
       </ul>
   </nav>
+
+
