@@ -1,8 +1,9 @@
 class CalendarsController < ApplicationController
   def index
-     make_calendar_table(calendar_params)
-  end
+    make_students_month(calendar_params)
+    make_calendar_table(calendar_params)
 
+  end
 
   private 
   def calendar_params
@@ -14,7 +15,6 @@ class CalendarsController < ApplicationController
     end
 
   end
-
 
     # カレンダー表示用のテーブルを作成
   def make_calendar_table(s_date)
@@ -28,49 +28,27 @@ class CalendarsController < ApplicationController
     t.integer :num_week
     t.timestamps
     end
-
     Object.const_set('Plan', Class.new(ApplicationRecord))
-    
-    make_plans(s_date)
-    # お稽古曜日と時間を登録
-    plans_index = @plans.uniq(&:time_table_id)
-    plans_index.each do |plan_index|
-       Plan.create(st_time:plan_index.time_table.st_time,week_id:plan_index.time_table.week_id,count:0)  
+   
+    @month_plans.where.not(one_week_id:1).group(:st_time,:week_id).count.each do |mpc|  
+      name =mpc[0][0].strftime("%k:%M") + " #{mpc[1].to_s}人"
+      Plan.create(name:name,start_time:date_from_week(1,mpc[0][1] ,s_date,mpc[0][0]),count:mpc[1],week_id:mpc[0][1],st_time:mpc[0][0],num_week:1)
     end
-    @ca_tables = Plan.all
-    # 人数と日付を登録
-    @ca_tables.each do |ca_table|
-      ca_table.start_time = date_from_week(1, ca_table.week_id,s_date,ca_table.st_time)
-      @plans.each do |plan|
-        if ca_table.st_time == plan.time_table.st_time && ca_table.week_id == plan.time_table.week_id
-          ca_table.count += 1 
-        end
-      end
-      ca_table.name = ca_table.st_time.strftime("%H:%M") + " " + ca_table.count.to_s + "人"
-      # 4分作成
-      4.times do |i|
-        new_table = ca_table.dup
-        new_table.start_time = date_from_week(i+1, ca_table.week_id,s_date,ca_table.st_time)
-        new_table.save
-      end
-    end 
-    @ca_tables = Plan.all
+    @month_plans.where.not(two_week_id:1).group(:st_time,:week_id).count.each do |mpc|  
+      name =mpc[0][0].strftime("%k:%M") + " #{mpc[1].to_s}人"
+      Plan.create(name:name,start_time:date_from_week(2,mpc[0][1] ,s_date,mpc[0][0]),count:mpc[1],week_id:mpc[0][1],st_time:mpc[0][0],num_week:1)
+    end
+    @month_plans.where.not(three_week_id:1).group(:st_time,:week_id).count.each do |mpc|  
+      name =mpc[0][0].strftime("%k:%M") + " #{mpc[1].to_s}人"
+      Plan.create(name:name,start_time:date_from_week(3,mpc[0][1] ,s_date,mpc[0][0]),count:mpc[1],week_id:mpc[0][1],st_time:mpc[0][0],num_week:1)
+    end
+    @month_plans.where.not(four_week_id:1).group(:st_time,:week_id).count.each do |mpc|  
+      name =mpc[0][0].strftime("%k:%M") + " #{mpc[1].to_s}人"
+      Plan.create(name:name,start_time:date_from_week(4,mpc[0][1] ,s_date,mpc[0][0]),count:mpc[1],week_id:mpc[0][1],st_time:mpc[0][0],num_week:1)
+    end
 
-
-  end   
-
-  # 当月のテーブル変更修正
-  def change_ca_tables
-    # 当月退会
-
-
-    # 当月の曜日時間変更
-
-
-    # 
-
+    @plans = Plan.all
   end
-
 
 
 
@@ -90,26 +68,48 @@ class CalendarsController < ApplicationController
     DateTime.new(d.year,d.month,d.day,st_time.hour,st_time.min  )
   end
 
-  # 今月のstudent_time_tableをすべて取得
-  def make_plans(s_date)
+
+
+  def make_students_month(s_date)
+
+    ApplicationRecord.connection.create_table('month_plans', temporary: true, force: true )do |t|
+    t.integer :student_id
+    t.string  :name
+    t.integer :week_id
+    t.string  :week
+    t.time    :st_time
+    t.integer :one_week_id
+    t.integer :two_week_id
+    t.integer :three_week_id
+    t.integer :four_week_id
+    t.timestamps
+    end
+    Object.const_set('MonthPlan', Class.new(ApplicationRecord))
+
+
     # 退会していない生徒
     students = Student.where(withdrawal_on:nil).or(Student.where('withdrawal_on >= ?',s_date.beginning_of_month))
-    @plans = []
+    
     students.each do |student|
-      # 退会していない人のタイムテーブルをすべて取得
-      stts= student.student_time_tables.where('started_on <= ? ',s_date.end_of_month)
-
-      # 今月遍歴があれば今月の遍歴すべて取得
-      if stts.find_by(started_on:s_date.beginning_of_month).present?
-
-          @plans << stts.find_by(started_on:s_date.beginning_of_month)
-      # 今月遍歴がなければ前月までの最後の遍歴を取得  
-      elsif stts.present?
-          @plans << stts.where('started_on < ? ',s_date.beginning_of_month).last
+      # 退会していない人で今月お稽古があるテーブルを取得
+      stu_tts= student.student_time_tables.where('started_on <= ? ',s_date.end_of_month)
+      stu_sds= student.student_schedules.where('started_on <= ? ',s_date.end_of_month)
+      stu_tt = {}
+      stu_sd = {}
+      # 今月内にテーブル両方あればmonthplanに登録する
+      if stu_tts.present? && stu_sds.present?
+  
+        stu_tt = stu_tts.where('started_on <= ? ',s_date.beginning_of_month).last
+        stu_sd = stu_sds.where('started_on <= ? ',s_date.beginning_of_month).last
+        MonthPlan.create(student_id:student.id,name:stu_tt.student.name,week_id:stu_tt.time_table.week_id,week:stu_tt.time_table.week.name, 
+          st_time:stu_tt.time_table.st_time,one_week_id:stu_sd.schedule.one_week_id,two_week_id:stu_sd.schedule.two_week_id,
+          three_week_id:stu_sd.schedule.three_week_id,four_week_id:stu_sd.schedule.four_week_id)
       end
     end
+    @month_plans = MonthPlan.all
   end
 
+
+
+
 end
-
-

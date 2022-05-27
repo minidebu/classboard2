@@ -1,26 +1,22 @@
-<div class = "container">
-
-<%= render 'shared/header'%>
-
-<% @plans.each  do  |a|%>
-
-  <%= a.student.name%>
-  <%= a.time_table.week.name %>
-  <%= a.time_table.st_time.strftime( "%H:%M" ) %>
-  <%= a.started_on%>
-  <br>
-
-<% end %>
 
 
-<%= month_calendar events:@ca_tables do |date,ca_tables|%>
-  <%= date.day %>
-  <% ca_tables.each do |ca_table|%>
-    <% unless ca_table.count == 0 %>
-      <div> <%= ca_table.name%> </div>
-    <% end %>
+<div class = "container border border-light">
+  <%= render 'shared/header'%>
+
+<div class="aa" id = "aa">asdhaihdsahdisahdoisaho</div>
+
+
+
+
+<%= month_calendar events:@plans do |date,ca_tables|%>
+   <%= date.day %>
+   <% ca_tables.each do |ca_table|%>
+     <% unless ca_table.count == 0 %>
+       <div class = "plan border text-center bg-info text-white"> <%= ca_table.name%></div>
+     <% end %>
   <%end%>
 <% end %>
-
-
 <div>
+
+
+  <%= render 'footer' ,month_plans:@month_plans%>
