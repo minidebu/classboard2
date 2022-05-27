@@ -60,3 +60,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'active_hash'
 gem 'cocoon'
+gem "simple_calendar", "~> 2.0"
+  

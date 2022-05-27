@@ -1,0 +1,16 @@
+<div class="border border-top ">
+
+<% month_plans.each do |plan| %>
+  <%= plan.name %>
+  <%= plan.week %>
+  <%= plan.st_time.strftime( "%H:%M" ) %>
+  <%= plan.one_week_id %>
+  <%= plan.two_week_id %>
+  <%= plan.three_week_id %>
+  <%= plan.four_week_id %>
+  <br>
+<% end %>
+
+</div>
+
+
