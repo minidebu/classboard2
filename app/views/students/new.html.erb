@@ -1,9 +1,9 @@
-<div class = "container">
+<div class = "container ">
   <%= render 'shared/header'%>
   <h3 >生徒入会登録</h3>
 	<%= render 'error_messages', model: @student%>
 
-  <div class = "col-3">
+  <div class = "col-3 ">
 		<%=form_with model:@student,local: true do |f| %>
 			<label> フリガナ </label>		
 			<%= f.text_field :kana_name ,pattern:"[\u30A1-\u30F6]*", class:"form-control"%><br>
@@ -26,7 +26,7 @@
 				" 年  "," 月  ") + " 日  " %>
       </div>
       <div class="actions mt-2 text-center">
-        <%= f.submit "登録" ,class:"btn btn-lg btn-primary"%>
+        <%= f.submit "登  録" ,class:"btn btn-lg btn-primary form-control"%>
       </div>
 
 

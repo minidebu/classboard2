@@ -1,69 +1,75 @@
-詳細画面
-<div class = "container d-flex">
-  <div class=" col-6">
+<div class = "container" >
+  <%= render 'shared/header'%>
+				<h1 ><%= @student.name%> さん</h1>	
+	<div class = "border-top">
+		<%# student情報 %>
+		<h4 class="mt-2">■ プロフィール</h4>	
+		<div class = "d-flex">
+			<div class=" col-6" 	>
+				<div class="mt-3">生年月日 : <%= @student.birth_on%></div>
+				<div class="mt-2">年齢 :<%= @student.get_age%> </div>
+				<div class="mt-2 mb-2"> 学年 :<%= @student.school_grade%></div>
+			
 
-  <h1><%= @student.name%> </h1>
+				<%=form_with model:@student,local: true ,url: student_path(@student),method: :patch,class: 'mt-3' do |f| %>  
+					<%= raw sprintf(
+						f.date_select(
+							:withdrawal_on,
+							class:'select-withdrawal',
+							id:"withdrawal-date",
+							use_month_numbers: true,	
+							discard_day: true,
+							default: Date.today.end_of_month,
+							start_year: (Time.now.year + 1 ),
+							end_year: (Time.now.year - 1),
+							date_separator: '%s'),
+						"年") + "月末" %>
+					<%= f.submit '退会する'%>
+				<% end %>
+			</div>
 
-  <div class="mt-3"> 生年月日 : <%= @student.birth_on%></div>
-  <div class="mt-2"> 年齢 :<%= @student.get_age%> </div>
-  <div class="mt-2 mb-5"> 学年 :<%= @student.school_grade%></div>
+			<%# 最新のtime_tableとshcdule情報 %>
+			<div class=" col-6 bordr">
+				<% if @student.student_schedules.present?%>
+					<div class="mt-2">現在のお稽古</div>
+					<div class="mt-2">曜日: <%=@student.time_tables.last.week.name%>　　時間: <%=@student.time_tables.last.st_time.strftime( "%H:%M" ) 	%></div>	
+					<div class="mt-2">1週目:  <%=@student.schedules.last.one_week.name%>  　2週目: <%=@student.schedules.last.two_week.name%>　3週目:  <%=@student.schedules.last.three_week.name%>  　4週目:<%=@student.schedules.last.four_week.name%> </div>
+					<%= link_to  student_schedule_time_tables_path(@student) ,method: :get do %>
+						<button class="btn btn-info mt-3 ">お稽古を変更する</button >
+					<% end %>
+				<% else %>
+					<p>現在お稽古を開始していません。</p>
+					<p>お稽古を登録してください。</p>
+					<%= link_to  student_schedule_time_tables_path(@student) ,method: :get do %>
+						<button class="btn btn-info">お稽古を登録する</button >
+					<% end %>
+				<% end %>	
+			</div>
+		</div>
+	</div>
 
-	<%= link_to  student_schedule_time_tables_path(@student) ,method: :get do %>
-      <button class="btn btn-info">週の計画</button >
-    <% end %>
+	<%# 過去のお稽古 %>
+	<div class = "border-top mt-4 mt-b">
+		<h4 class="mt-2">■ 過去のお稽古</h4>	
 
-<%= render partial: "schedules/index", locals: { student: @student}%>
+		<% if @student.student_schedules.present? && @student.student_schedules.first.started_on < Date.today.beginning_of_month  %>
+			<%= render partial: "schedule_logs", locals: { student: @student}%>
+		<% else %>
+			<p>過去のお稽古はありません。</p>
+		<% end %>
 
-		<%=form_with model:@student,local: true ,url: student_path(@student),method: :patch,class: 'mt-4' do |f| %>  
-  
- 			<%= raw sprintf(
-				f.date_select(
-					:withdrawal_on,
-					class:'select-withdrawal',
-					id:"withdrawal-date",
-					use_month_numbers: true,	
-					discard_day: true,
-					default: Date.today.end_of_month,
-					start_year: (Time.now.year + 1 ),
-					end_year: (Time.now.year - 1),
-					date_separator: '%s'),
-				"年") + "月末" %>
-        <%= f.submit '退会する'%>
-    <% end %>
 
-    <%= link_to students_path,method: :get do %>
-      <button class="btn btn-info">戻る</button >
-    <% end %>
+	</div>
 
-    <%= render 'error_messages', model: @student%>
-</div>
-    <div class="mt-4 col-5"> お稽古
-    		<table class="table table-hover table-bordered text-center ">
-			<thead>
-				<tr >
-					<th class="text-center col-1">年月 </th >
-					<th class="text-center col-2	">硬筆</th>
-					<th class="text-center col-2	">毛筆</th>
-				</tr>
-			</thead>
-			<tbody>
-					<tr >
-						<td >2019年5月</td>
-						<td >３回</td>
-						<td >２回</td>
-					</tr>
-          <tr >
-						<td >2019年6月</td>
-						<td >1回</td>
-						<td >3回</td>
-					</tr>
-        	<tr >
-						<td >2019年7  月</td>
-						<td >2回</td>
-						<td >2回</td>
-					</tr>
-			</tbody>
-		</table>
-    </div >
+	<%# 遍歴 %>
+	<div class = "border-top mt-4 mt-b">
+		<h4 class="mt-2">■ 過去の遍歴</h4>	
+	<% if @student.student_schedules.count > 1%>
+			<%= render partial: "student_schedule_logs", locals: { student: @student}%>
+	<% else %>
+		<p>変更履歴はありません。</p>
+	<% end %>
 
+			</div>
+	</div>
 </div>

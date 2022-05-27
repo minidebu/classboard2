@@ -18,7 +18,7 @@ class StudentsController < ApplicationController
   end
 
   def show
-    @student = Student.find(params[:id])
+    @student = Student.find(params[:id])    
   end  
 
   def update
@@ -31,8 +31,11 @@ class StudentsController < ApplicationController
     
   end
 
+
+
   private
-  
+
+
   def student_params
     params.require(:student).permit(:kana_name,:name,:birth_on)
   end
