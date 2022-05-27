@@ -1,5 +1,5 @@
 
-  <nav class="navbar navbar-expand navbar-light bg-light">
+  <nav class="navbar navbar-expand navbar-light bg-light mt-2 mb-3">
     <%= link_to '〇〇教室', root_path , class:"navbar-brand"%>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
@@ -7,7 +7,7 @@
             生徒
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><%= link_to '入会登録', "#" , class:"dropdown-item"%></li>
+            <li><%= link_to '入会登録', new_student_path , class:"dropdown-item"%></li>
             <li><%= link_to '一覧・変更', students_path , class:"dropdown-item"%></li>
           </ul>
         </li>

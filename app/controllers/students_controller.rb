@@ -1,16 +1,19 @@
 
 class StudentsController < ApplicationController
   def index
-    @student = Student.new
     @students = Student.all
   end
+  def new
+    @student = Student.new
+  end
+
   def create
     @student = Student.new(student_params)
     if @student.save 
       redirect_to student_path(@student[:id])
     else
-      @students = Student.all
-      render action: :index 
+      
+      render action: :new
     end
   end
 
