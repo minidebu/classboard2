@@ -1,7 +1,8 @@
 class SchedulesController < ApplicationController
   def index
+    
     @schedule = Schedule.new
-    @schedules =Schedule.all
+    @lesson = Lesson.new
   end
 
   def create
@@ -10,7 +11,7 @@ class SchedulesController < ApplicationController
     if @schedule .save 
       redirect_to schedules_path
     else
-      @schedules = Schedule.all
+      @lesson = Lesson.new
       render action: :index 
     end
   end
