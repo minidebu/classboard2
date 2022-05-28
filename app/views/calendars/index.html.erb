@@ -7,7 +7,7 @@
     <%= date.day %>
     <% ca_tables.each do |ca_table|%>
       <% unless ca_table.count == 0 %>
-        <div class = "plan border text-center bg-info text-white"> <%= ca_table.name%></div>
+        <div class = "plan border bg-info text-white"> <%= ca_table.name%></div>
       <% end %>
     <%end%>
   <% end %>

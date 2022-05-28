@@ -5,7 +5,8 @@ class LessonsController < ApplicationController
     if @lesson.save
       redirect_to root_path
     else
-      render "plans/index"
+      @schedule = Schedule.new
+      render "schedules/index"
     end
   end
 
