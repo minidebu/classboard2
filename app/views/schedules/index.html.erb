@@ -18,15 +18,13 @@
         <table class="table table-hover table-bordered text-center ">
           <thead>
             <tr >
-              <th class="text-center">  </th>
               <th class="text-center">お稽古名一覧</th>
             </tr>
           </thead>
           <tbody>   
             <% Lesson.all.each do |lesson| %>
-            <% next if lesson.id == 1 %>
+            <% next if lesson.id == Lesson.first.id %>
               <tr > 
-                <td > <%= lesson.id %> </td> 
                 <td > <%= lesson.name %> </td> 
               </tr>
             <%end%>          
