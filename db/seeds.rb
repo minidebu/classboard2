@@ -3,7 +3,7 @@ User.delete_all
 Lesson.delete_all
 
 # ユーザーを登録
-Lesson.create!(name:"--",id:1)
+Lesson.create!(name:"--")
 User.create!(password: "111111", email: "aa@aa")    
 
 
