@@ -1,6 +1,9 @@
 # 既存のユーザーを全削除
 User.delete_all
+Lesson.delete_all
 
 # ユーザーを登録
-User.create!(password: "111111", email: "aa@aa")
-Student.create!(name: "松本", kana_name: "マツモト",birth_on:"1985/10/19" )
+Lesson.create!(name:"--",id:1)
+User.create!(password: "111111", email: "aa@aa")    
+
+

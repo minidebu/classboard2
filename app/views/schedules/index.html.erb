@@ -13,71 +13,76 @@
         <%= f.text_field :name ,placeholder:"お稽古名" ,class:"form-control mt-2" %>
       <%end%>
         <br>        <br>
-
-      <h5 class="mt-3">お稽古名一覧</h5>
-      <table class="table table-hover table-bordered text-center ">
-        <thead>
-          <tr >
-            <th class="text-center">お稽古名一覧</th>
-          </tr>
-        </thead>
-        <tbody>   
-          <% Lesson.all.each do |lesson| %>
-            <tr > 
-              <td > <%= lesson.name %> </td> 
+      <% if Lesson.count > 1 %>
+        <h5 class="mt-3">お稽古名一覧</h5>
+        <table class="table table-hover table-bordered text-center ">
+          <thead>
+            <tr >
+              <th class="text-center">お稽古名一覧</th>
             </tr>
-          <%end%>          
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody>   
+            <% Lesson.all.each do |lesson| %>
+            <% next if lesson.id == 1 %>
+              <tr > 
+                <td > <%= lesson.name %> </td> 
+              </tr>
+            <%end%>          
+          </tbody>
+        </table>
+      <% end %>
     </div>
 
-    <div class ="col-9 p-2" >
-        <h4 class="mt-2">■ お稽古パターンの登録</h4>	
-      <%=form_with model:@schedule,local: true ,method: :post, class:"mt-2"  do |f| %>
-        <%= f.submit '登録する'%>
-        <table class="table table-hover table-bordered text-center mt-2">
+    
+      <div class ="col-9 p-2" >
+        <% if Lesson.count > 1 %> 
+          <h4 class="mt-2">■ お稽古パターンの登録</h4>	
+        <%=form_with model:@schedule,local: true ,method: :post, class:"mt-2"  do |f| %>
+          <%= f.submit '登録する'%>
+          <table class="table table-hover table-bordered text-center mt-2">
+            <thead>
+              <tr >    
+                <th class="text-center">１周目</th>
+                <th class="text-center">２周目</th>
+                <th class="text-center">3週目</th>
+                <th class="text-center">4週目</th>
+              </tr>
+            </thead>
+            <tbody>          
+              <tr >
+                <td > <%= f.collection_select(:one_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td> 
+                <td > <%= f.collection_select(:two_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>
+                <td > <%= f.collection_select(:three_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>
+                <td > <%= f.collection_select(:four_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>        
+              </tr>   
+            </tbody>
+          </table>
+        <%end%>
+
+        <h5>お稽古一覧</h5>
+        <table class="table table-hover table-bordered text-center ">
           <thead>
-            <tr >    
+            <tr >
               <th class="text-center">１周目</th>
               <th class="text-center">２周目</th>
               <th class="text-center">3週目</th>
               <th class="text-center">4週目</th>
             </tr>
           </thead>
-          <tbody>          
-            <tr >
-              <td > <%= f.collection_select(:one_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td> 
-              <td > <%= f.collection_select(:two_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>
-              <td > <%= f.collection_select(:three_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>
-              <td > <%= f.collection_select(:four_week_id, Lesson.all, :id, :name, {}, {class:"lesson-select"}) %> </td>        
-            </tr>   
+          <tbody>   
+            <% Schedule.all.each do |schedule| %>
+              <tr > 
+                <td > <%= schedule.one_week.name %> </td> 
+                <td > <%= schedule.two_week.name %> </td> 
+                <td > <%= schedule.three_week.name %> </td> 
+                <td > <%= schedule.four_week.name %> </td> 
+              </tr>
+            <%end%>          
           </tbody>
         </table>
-      <%end%>
-
-      <h5>お稽古一覧</h5>
-      <table class="table table-hover table-bordered text-center ">
-        <thead>
-          <tr >
-            <th class="text-center">１周目</th>
-            <th class="text-center">２周目</th>
-            <th class="text-center">3週目</th>
-            <th class="text-center">4週目</th>
-          </tr>
-        </thead>
-        <tbody>   
-          <% Schedule.all.each do |schedule| %>
-            <tr > 
-              <td > <%= schedule.one_week.name %> </td> 
-              <td > <%= schedule.two_week.name %> </td> 
-              <td > <%= schedule.three_week.name %> </td> 
-              <td > <%= schedule.four_week.name %> </td> 
-            </tr>
-          <%end%>          
-        </tbody>
-      </table>
-
+      <% else %>
+        <h2 class="mt-2"> お稽古名を登録してください。 </h2>
+      <% end %>
     </div >
   </div >
 </div>

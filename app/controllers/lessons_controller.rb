@@ -3,7 +3,7 @@ class LessonsController < ApplicationController
   def create
     @lesson = Lesson.new(lesson_params)
     if @lesson.save
-      redirect_to root_path
+      redirect_to schedules_path
     else
       @schedule = Schedule.new
       render "schedules/index"

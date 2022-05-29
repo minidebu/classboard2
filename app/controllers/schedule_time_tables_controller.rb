@@ -1,8 +1,11 @@
 class ScheduleTimeTablesController < ApplicationController
   def index
-    @student = Student.find(params[:student_id])
-    @stt = ScheduleTimeTable.set(@student)
-
+    if Schedule.all.blank?
+      redirect_to schedules_path
+    else
+      @student = Student.find(params[:student_id])
+      @stt = ScheduleTimeTable.set(@student)
+    end
   end
   def create
     @stt = ScheduleTimeTable.new(stt_params)
