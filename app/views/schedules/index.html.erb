@@ -4,8 +4,8 @@
   <%= render 'shared/error_messages', model: @schedule%>
 	<h3 >設定</h3>
 
-  <div class ="border-top mt-s d-flex" >
-    <div class ="col-3 p-2" >
+  <div class ="border-top mt-s d-md-flex" >
+    <div class ="col-md-4 p-2" >
         <h4 class="mt-2">■ お稽古名を登録</h4>
 
       <%=form_with model:@lesson,local: true ,method: :post, class:"mt-2"  do |f| %>
@@ -17,7 +17,7 @@
         <h5 class="mt-3">お稽古名一覧</h5>
         <table class="table table-hover table-bordered text-center ">
           <thead>
-            <tr >
+            <tr > 
               <th class="text-center">お稽古名一覧</th>
             </tr>
           </thead>
@@ -34,7 +34,7 @@
     </div>
 
     
-      <div class ="col-9 p-2" >
+      <div class ="col-md-8 p-2" >
         <% if Lesson.count > 1 %> 
           <h4 class="mt-2">■ お稽古パターンの登録</h4>	
         <%=form_with model:@schedule,local: true ,method: :post, class:"mt-2"  do |f| %>

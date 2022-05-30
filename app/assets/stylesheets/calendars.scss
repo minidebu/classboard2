@@ -6,14 +6,17 @@
 .simple-calendar {
   .day {}
 
-  .wday-0  {
+  .wday-0,.w-sunday {
+    background: #FADBDA;
   }
   .wday-1 {}
   .wday-2 {}
   .wday-3 {}
   .wday-4 {}
   .wday-5 {}
-  .wday-6 {}
+  .wday-6,.w-saturday {
+    background: #DDFFFF;
+  }
 
   .today {}
   .past {}

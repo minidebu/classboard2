@@ -1,60 +1,58 @@
 <div class = "container">
+	<%= render 'shared/header'%>
+  <div class="d-flex align-items-center">
+    <h3 class="mr-5"><%= @student.name %> さん</h3>
+    <%= button_to " 戻る " ,student_path(@student),method: :get ,class:"mx-3" %>
 
-  <h1><%= @student.name %></h1>
+  </div>
+  <div class = "border-top">
 
+    <%= form_with model:[@student,@stt], local: true do |f| %>
+      曜　日:
+      <%= f.collection_select(:week_id, Week.all, :id, :name, {}, {class:"week-select mt-2"}) %>
+      <br>
+      時　間:
+      <%= f.time_select :st_time,{start_hour: 8, end_hour: 22, minute_step: 15} , ignore_data:true,class:"mt-2 mb-2" %>
+      <br>
+      開始月:
+      <%= raw sprintf(
+        f.date_select(
+          :started_on,
+          id:"started_on",
+          discard_day: true,
+          use_month_numbers: true,
+          start_year: (Time.now.year - 1),
+          end_year: (Time.now.year + 1),
+          default: Date.today.beginning_of_month,
+          date_separator: '%s'),
+          "年") + "月" %>
+      <table class="table table-hover table-bordered text-center mt-2">
+        <thead>
+          <tr >
+            <th class="text-center">選択</th>
+            <th class="text-center">1周目</th>
+            <th class="text-center">2周目</th>
+            <th class="text-center">3週目</th>
+            <th class="text-center">4週目</th>
 
-  	<%= link_to  student_path(@student) ,method: :get do %>
-      <button class="btn btn-info">戻る</button >
-    <% end %>
-
-  
-
-  <%= form_with model:[@student,@stt], local: true do |f| %>
-    曜日:
-    <%= f.collection_select(:week_id, Week.all, :id, :name, {}, {class:"week-select"}) %>
-    時間:
-    <%= f.time_select :st_time,{start_hour: 8, end_hour: 22, minute_step: 15} , ignore_data:true %>
-    <br>
-    開始日:
-    <%= raw sprintf(
-      f.date_select(
-        :started_on,
-        class:'select-birth',
-        id:"started_on",
-        discard_day: true,
-        use_month_numbers: true,
-        start_year: (Time.now.year - 1),
-        end_year: (Time.now.year + 1),
-        default: Date.today.beginning_of_month,
-        date_separator: '%s'),
-        "年") + "月" %>
-    <table class="table table-hover table-bordered text-center ">
-      <thead>
-        <tr >
-          <th class="text-center">選択</th>
-          <th class="text-center">1周目</th>
-          <th class="text-center">2周目</th>
-          <th class="text-center">3週目</th>
-          <th class="text-center">4週目</th>
-
-        </tr>
-      </thead>
-      <tbody>
-        <% Schedule.all.each do |schedule| %>
-          <tr > 
-            <td > <%= f.radio_button :schedule_id, schedule.id ,:checked => (true if schedule.id == @stt.schedule_id  ) %> </td> 
-            <td > <%= schedule.one_week.name %> </td> 
-            <td > <%= schedule.two_week.name %> </td> 
-            <td > <%= schedule.three_week.name %> </td> 
-            <td > <%= schedule.four_week.name %> </td> 
           </tr>
-          <%end%>      
-      </tbody>
+        </thead>
+        <tbody>
+          <% Schedule.all.each do |schedule| %>
+            <tr > 
+              <td > <%= f.radio_button :schedule_id, schedule.id ,:checked => (true if schedule.id == @stt.schedule_id  ) %> </td> 
+              <td > <%= schedule.one_week.name %> </td> 
+              <td > <%= schedule.two_week.name %> </td> 
+              <td > <%= schedule.three_week.name %> </td> 
+              <td > <%= schedule.four_week.name %> </td> 
+            </tr>
+            <%end%>      
+        </tbody>
 
-    </table>  
-    <%= f.submit '変更  '%>
-  <% end %>    
-
+      </table>  
+      <%= f.submit '変更 '%>
+    <% end %>    
+  </div>
 </div >
 
 
