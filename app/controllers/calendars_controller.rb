@@ -1,9 +1,19 @@
 class CalendarsController < ApplicationController
+  before_action :set_beginning_of_week
+
   def index
     make_students_month(calendar_params)
     make_calendar_table(calendar_params)
 
   end
+
+
+  private
+  def set_beginning_of_week
+    Date.beginning_of_week = :sunday
+  end
+
+
 
   private 
   def calendar_params
@@ -15,6 +25,7 @@ class CalendarsController < ApplicationController
     end
 
   end
+
 
     # カレンダー表示用のテーブルを作成
   def make_calendar_table(s_date)
