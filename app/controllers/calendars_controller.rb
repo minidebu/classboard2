@@ -5,17 +5,50 @@ class CalendarsController < ApplicationController
     make_students_month(calendar_params)
     make_calendar_table(calendar_params)
 
+
+    if params[:s_day].present?
+      make_students_day(params[:s_day])
+      binding.pry
+      partial = render_to_string(partial:'footer', :locals => { month_plans:@month_plans })
+      render json:{html:partial}    
+    end
+
+
+
   end
 
 
+
+
+
   private
+  # １日分の生徒リストを出す
+  def make_students_day(s_day)
+    num_week = week_from_date(s_day)
+
+  end
+
+
+
+  # 日付から曜日と何周目かを返す
+  def week_from_date(s_day)
+    d_day = Date.parse(s_day)
+    # その月の週数と日曜始まりにする調整
+    beginning_of_month_cweek = d_day.beginning_of_month.cweek - 1
+     if d_day.beginning_of_month.wday > d_day.wday && d_day.wday != 0
+      beginning_of_month_cweek += 1 
+     end
+    nth = d_day.cweek - beginning_of_month_cweek
+    nth = s_day.ago(1.week).to_date.cweek - beginning_of_month_cweek if nth.negative?
+    binding.pry
+    return { num: nth, wday: d_day.wday }
+  end
+
+  # シンプルカレンダーを日曜始まりにする
   def set_beginning_of_week
     Date.beginning_of_week = :sunday
   end
 
-
-
-  private 
   def calendar_params
     if params[:start_date].blank?
    
@@ -62,6 +95,8 @@ class CalendarsController < ApplicationController
   end
 
 
+  
+
 
 # 何周目の何曜日から日付を返す
   def date_from_week(num_week, wday,s_date,st_time)
@@ -80,7 +115,7 @@ class CalendarsController < ApplicationController
   end
 
 
-
+  # 一ヶ月分の生徒情報すべて
   def make_students_month(s_date)
 
     ApplicationRecord.connection.create_table('month_plans', temporary: true, force: true )do |t|
