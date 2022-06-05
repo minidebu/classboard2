@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   resources :students ,only:[:index,:new,:create,:update,:show]  do
     resources :schedule_time_tables,only:[:index ,:create]
   end
-  resources :calendars ,onle:[:index]
+  resources :calendars ,only:[:index] 
+  get "calendars/foot"
   resources :time_tables,only:[:create]
   resources :schedules,only:[:index,:create]
   resources :plans ,only:[:index,:new,:create]
