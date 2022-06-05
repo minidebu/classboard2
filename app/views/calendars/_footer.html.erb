@@ -1,17 +1,19 @@
 <div class="border mt-2  border-top ">
-    <h1> 作成中 </h1>
-<% month_plans.each do |plan| %>
-  <%= plan.name %>
-  <%= plan.week %>
-  <%= plan.st_time.strftime( "%H:%M" ) %>
-  <%= plan.one_week_id %>
-  <%= plan.two_week_id %>
-  <%= plan.three_week_id %>
-  <%= plan.four_week_id %>
-  <br>
-<% end %>
 
+  <% st_time = ""%>
 
+  <div class="row">
+    
+    <% day_plans.each do |plan| %>
+      <% unless st_time == plan[:st_time] %>
+        <%st_time = plan[:st_time] %>
+        <h5 class= "mt-2"><%= st_time.strftime( "%-H:%M" ) %></h5>
+      <% end %>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <%= plan[:name] %>さん　<%= Lesson.find(plan[:lesson_id]).name %>
+        </div>
+    <% end %>
+  </div>
 </div>
 
 
