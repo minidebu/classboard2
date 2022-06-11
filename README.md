@@ -28,14 +28,14 @@ CLASS BOARD
 知人が書道教室を運営しており、紙媒体での予約管理に手間がかかり困っていた。
 パソコンやスマートフォンで管理できれば合理的だと思い作成した。
 # 実装した機能についての画像やGIF及びその説明
- - お稽古の登録機能
-   生徒は事前に登録したお稽古パターンと紐付けをする。
+ - お稽古の登録機能  
+   生徒は事前に登録したお稽古パターンと紐付けをする。  
    お稽古パターンは設定から増やすことできる。
    [![Image from Gyazo](https://i.gyazo.com/954deb9148c4ddd359dfc2ac9d5d2798.png)](https://gyazo.com/954deb9148c4ddd359dfc2ac9d5d2798)
- - カレンダー表示機能
+ - カレンダー表示機能  
    お稽古がある日はカレンダー上に開始時間、受講者の人数が表示される。
    [![Image from Gyazo](https://i.gyazo.com/a91234da11af4cf5b7bd60c68fac09bd.png)](https://gyazo.com/a91234da11af4cf5b7bd60c68fac09bd)  
- - 受講者表示機能
+ - 受講者表示機能  
    日付をクリックすると、下部にお稽古の時間毎に受講者の一覧が表示される。
   [![Image from Gyazo](https://i.gyazo.com/64fa8cdd8f04f45f40c3d4a6390157de.gif)](https://gyazo.com/64fa8cdd8f04f45f40c3d4a6390157de)
 
