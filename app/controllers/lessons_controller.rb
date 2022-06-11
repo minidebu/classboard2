@@ -12,8 +12,11 @@ class LessonsController < ApplicationController
 
   def destroy
     lesson = Lesson.find(params[:id])
-    lesson.destroy
-    redirect_to root_path
+    if lesson.destroy
+      redirect_to schedules_path
+    else
+      
+    end
 
   end
 

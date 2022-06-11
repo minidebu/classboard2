@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :time_tables,only:[:create]
   resources :schedules,only:[:index,:create]
   resources :plans ,only:[:index,:new,:create]
-  resources :lessons ,only:[:create]
+  resources :lessons ,only:[:create,:destroy]
 
 
   

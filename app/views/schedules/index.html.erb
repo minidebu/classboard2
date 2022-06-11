@@ -26,6 +26,7 @@
             <% next if lesson.id == Lesson.first.id %>
               <tr > 
                 <td > <%= lesson.name %> </td> 
+                <td> <%= link_to "削除" ,lesson_path(lesson),method: :delete %></td>
               </tr>
             <%end%>          
           </tbody>

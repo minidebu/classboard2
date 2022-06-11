@@ -88,7 +88,6 @@ validate :not_afetr_start
 
         schedule.schedule_id = schedule_id.to_i
         schedule.save
-        binding.pry  
         return false
       end
     end
